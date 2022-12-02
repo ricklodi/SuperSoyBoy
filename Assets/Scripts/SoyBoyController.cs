@@ -125,6 +125,7 @@ public class SoyBoyController : MonoBehaviour
         // Input.GetAxis() gets X and Y values from the built-in Unity control
         input.x = Input.GetAxis("Horizontal");
         input.y = Input.GetAxis("Jump");
+        animator.SetFloat("Speed", Mathf.Abs(input.x));
         // If input.x is greater than 0, then the player is facing right, so the sprite gets flipped
         //on the X - axis
         if (input.x > 0f)
@@ -140,10 +141,12 @@ public class SoyBoyController : MonoBehaviour
         if (input.y >= 1f)
         {
             jumpDuration += Time.deltaTime;
+            animator.SetBool("IsJumping", true);
         }
         else
         {
             isJumping = false;
+            animator.SetBool("IsJumping", false);
             jumpDuration = 0f;
         }
 
@@ -153,6 +156,7 @@ public class SoyBoyController : MonoBehaviour
             {
                 isJumping = true;
             }
+            animator.SetBool("IsOnWall", false);
         }
         //Jump is cancelled if held longer than the Threshold
         if (jumpDuration > jumpDurationThreshold) input.y = 0f;
@@ -201,8 +205,19 @@ public class SoyBoyController : MonoBehaviour
 
             if (IsWallToLeftOrRight() && !PlayerIsOnGround() && input.y == 1)
             {
-                rb.velocity = new Vector2(-GetWallDirection()
-                * speed * 0.75f, rb.velocity.y);
+                rb.velocity = new Vector2(-GetWallDirection() * speed
+                * 0.75f, rb.velocity.y);
+                animator.SetBool("IsOnWall", false);
+                animator.SetBool("IsJumping", true);
+            }
+            else if (!IsWallToLeftOrRight())
+            {
+                animator.SetBool("IsOnWall", false);
+                animator.SetBool("IsJumping", true);
+            }
+            if (IsWallToLeftOrRight() && !PlayerIsOnGround())
+            {
+                animator.SetBool("IsOnWall", true);
             }
         }
         //If pressed less the Threshold, it gives a new velocity for y
