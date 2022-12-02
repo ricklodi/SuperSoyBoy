@@ -38,6 +38,7 @@ public class Hazard : MonoBehaviour
             spriteRenderer.sprite = hitSprite;
             // Lastly, destroy the colliding object (the player).
             Destroy(coll.gameObject);
+            GameManager.instance.RestartLevel(1.25f);
         }
     }
     // Update is called once per frame
