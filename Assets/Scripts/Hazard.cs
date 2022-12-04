@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class Hazard : MonoBehaviour
 {
+    public GameObject MoveAround;
     public GameObject playerDeathPrefab;
     public AudioClip deathClip;
     public Sprite hitSprite;
@@ -44,6 +46,14 @@ public class Hazard : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+        //if (MoveAround != null)
+        //{
+        //    Collider2D ObjectBounds = MoveAround.GetComponent<Collider2D>();
+        //    //if (transform.position.x == ObjectBounds.bounds.center.x)
+        //    //{
+        //        transform.Translate(Vector3.right*Time.deltaTime*20);
+        // //   }
+            
+        //}
     }
 }
